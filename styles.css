@@ -259,7 +259,7 @@ body {
   border-radius: var(--radius);
   z-index: 20;
   cursor: pointer;
-  animation: fadeIn 180ms ease;
+  animation: fade-in 180ms ease;
 }
 
 .bio-overlay__text {
@@ -270,7 +270,7 @@ body {
   margin: 0;
 }
 
-@keyframes fadeIn {
+@keyframes fade-in {
   from { opacity: 0; }
   to   { opacity: 1; }
 }

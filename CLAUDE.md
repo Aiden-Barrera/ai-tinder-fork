@@ -16,16 +16,16 @@ python3 -m http.server
 This is a pure vanilla HTML/CSS/JS frontend — no framework, no bundler, no npm.
 
 - **`index.html`**: App shell. Loads `app.js` as a plain (non-module) `<script>`. The card deck (`#deck`) and control buttons (`#likeBtn`, `#nopeBtn`, `#superLikeBtn`, `#shuffleBtn`) are the main DOM targets.
-- **`app.js`**: The single entry point. Runs as a global script (no `import`/`export`). Contains its own copy of all data arrays and the `generateProfiles` function, then renders cards to `#deck` on load. Button click handlers for like/nope/super-like exist but are intentionally left as stubs (only `console.log`).
+- **`app.js`**: The single entry point. Runs as a global script (no `import`/`export`). Contains its own copy of all data arrays, `generateProfiles`, and the full card-interaction system: pointer-drag swipe gestures (left/right/up), directional stamp reveals, button handlers (like/nope/super-like/shuffle), and a double-tap bio overlay.
 - **`data.js`**: An ES module version of the data layer (`export function generateProfiles`, `export const TAGS`). Currently not imported by `index.html` — it exists as a cleaner module-based alternative for students to wire up.
 - **`styles.css`**: All styles. Uses CSS custom properties defined in `:root` (`--accent`, `--like`, `--nope`, `--super`, etc.). Cards use `position: absolute` stacking with nth-child transforms to create a deck effect.
 
 ## Key Implementation Notes
 
 - `app.js` and `data.js` duplicate the same data (TAGS, names, cities, etc.). This is intentional scaffolding — `data.js` is the cleaner module intended for student use.
-- The swipe gesture logic and button actions are **not implemented** — this is the primary student task.
+- The swipe gesture logic and button actions are **fully implemented** in `app.js` — see `dismissCard`, `finishDrag`, and `toggleBioOverlay`.
 - Profile images use Unsplash public URLs with hardcoded seeds; swap `UNSPLASH_SEEDS` or the `imgFor` function to change images.
-- The deck renders all 12 cards stacked via absolute positioning; only the first 3 get distinct transforms (nth-child 1–3). Swipe/dismiss logic needs to remove the top card from the DOM.
+- The deck renders all 12 cards stacked via absolute positioning; only the first 3 get distinct transforms (nth-child 1–3). The first child is the top card (`getTopCard()` uses `firstElementChild`); dismissal removes it from the DOM so the next card advances.
 
 ## Task to Implement
 

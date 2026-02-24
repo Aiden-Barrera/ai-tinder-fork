@@ -246,7 +246,7 @@ function finishDrag(endX, endY) {
   const card = activeCard;
   activeCard = null;
 
-  card.querySelectorAll(".stamp").forEach((s) => (s.style.opacity = 0));
+  card.querySelectorAll(".stamp").forEach((s) => { s.style.opacity = "0"; });
 
   const absDx = Math.abs(dx);
   const absDy = Math.abs(dy);
@@ -261,6 +261,7 @@ function finishDrag(endX, endY) {
     // Not far enough — snap back
     card.style.transition = "transform 300ms ease";
     card.style.transform  = "";
+    card.style.userSelect = "";
   }
 }
 
@@ -269,7 +270,8 @@ deckEl.addEventListener("pointercancel", () => {
   if (!activeCard) return;
   activeCard.style.transition = "transform 300ms ease";
   activeCard.style.transform  = "";
-  activeCard.querySelectorAll(".stamp").forEach((s) => (s.style.opacity = 0));
+  activeCard.style.userSelect = "";
+  activeCard.querySelectorAll(".stamp").forEach((s) => { s.style.opacity = "0"; });
   isDragging = false;
   activeCard = null;
 });
