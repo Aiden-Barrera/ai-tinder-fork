@@ -111,9 +111,11 @@ body {
   transition: transform 220ms ease, opacity 220ms ease, filter 220ms ease;
 }
 
-.card:nth-child(1) { transform: translateY(0) scale(1); }
-.card:nth-child(2) { transform: translateY(10px) scale(0.985); filter: brightness(0.95); }
-.card:nth-child(3) { transform: translateY(20px) scale(0.97); filter: brightness(0.9); }
+/* First child is the top (front) card; give it the highest z-index so it
+   sits above the peek cards even though it's first in DOM order. */
+.card:nth-child(1) { transform: translateY(0) scale(1);             z-index: 3; }
+.card:nth-child(2) { transform: translateY(10px) scale(0.985); filter: brightness(0.95); z-index: 2; }
+.card:nth-child(3) { transform: translateY(20px) scale(0.97);  filter: brightness(0.9);  z-index: 1; }
 
 .card__media {
   height: 70%;
@@ -200,4 +202,75 @@ body {
 @media (max-width: 520px) {
   .deck { width: 100%; }
   .ctrl { width: 56px; height: 56px; font-size: 24px; }
+}
+
+/* -------------------
+   Swipe stamps
+   ------------------- */
+.stamp {
+  position: absolute;
+  top: 28px;
+  padding: 6px 14px;
+  border-radius: 8px;
+  border: 3px solid;
+  font-size: 24px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 10;
+  transition: opacity 80ms;
+}
+
+.stamp--like {
+  left: 20px;
+  color: var(--like);
+  border-color: var(--like);
+  transform: rotate(-15deg);
+}
+
+.stamp--nope {
+  right: 20px;
+  color: var(--nope);
+  border-color: var(--nope);
+  transform: rotate(15deg);
+}
+
+.stamp--super {
+  left: 50%;
+  top: 38%;
+  transform: translateX(-50%) rotate(-5deg);
+  color: var(--super);
+  border-color: var(--super);
+}
+
+/* -------------------
+   Bio overlay (double-tap)
+   ------------------- */
+.bio-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.78);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 28px;
+  border-radius: var(--radius);
+  z-index: 20;
+  cursor: pointer;
+  animation: fadeIn 180ms ease;
+}
+
+.bio-overlay__text {
+  color: #fff;
+  font-size: 18px;
+  line-height: 1.6;
+  text-align: center;
+  margin: 0;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
